@@ -4,7 +4,7 @@
 #define echoPin 13 
 AF_DCMotor motor1(1,MOTOR12_64KHZ); // set up motors.
 AF_DCMotor motor2(2, MOTOR12_64KHZ);
-AF_DCMotor motor3(2, MOTOR34_64KHZ);
+AF_DCMotor motor3(3, MOTOR34_64KHZ);
 
 void setup() {
   Serial.begin(9600); // begin serial communitication  
