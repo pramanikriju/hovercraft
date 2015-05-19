@@ -4,16 +4,14 @@
 #define echoPin 13 
 AF_DCMotor motor1(1,MOTOR12_64KHZ); // set up motors.
 AF_DCMotor motor2(2, MOTOR12_64KHZ);
-AF_DCMotor motor3(3, MOTOR34_64KHZ);
+
 
 void setup() {
   Serial.begin(9600); // begin serial communitication  
-  Serial.println("Motor test!");
+  Serial.println("Blind prototype!");
   pinMode(trigPin, OUTPUT);// set the trig pin to output (Send sound waves)
   pinMode(echoPin, INPUT);// set the echo pin to input (recieve sound waves)
-  motor1.setSpeed(127); //set the speed of the motors, between 0-255
-  motor2.setSpeed (127);
-  motor3.setSpeed (255);
+  
 }
  
 void loop() {
@@ -27,24 +25,56 @@ void loop() {
   digitalWrite(trigPin, LOW);
   duration = pulseIn(echoPin, HIGH);
   distance = (duration/2) / 29.1;// convert the distance to centimeters.
-  if (distance < 25)/*if there's an obstacle 25 centimers, ahead, do the following: */ {   
-   Serial.println ("Close Obstacle detected!" );
-  Serial.println ("Obstacle Details:");
-  Serial.print ("Distance From Robot is " );
+  if (distance < 25)/
+ {   
   Serial.print ( distance);
   Serial.print ( " CM!");// print out the distance in centimeters.
+motor1.setSpeed(255); 
+  motor2.setSpeed (255);
+  Serial.println (" closest");
+    motor1.run(FORWARD);
+    motor2.run (BACKWARD);
 
-  Serial.println (" The obstacle is declared a threat due to close distance. ");
-  Serial.println (" Turning !");
-    motor1.run(FORWARD);  // Turn as long as there's an obstacle ahead.
+}
+ if (distance >25  && distance<100 )
+ {   
+  Serial.print ( distance);
+  Serial.print ( " CM!");// print out the distance in centimeters.
+motor1.setSpeed(175); 
+  motor2.setSpeed (175);
+  Serial.println (" close 2");
+    motor1.run(FORWARD);
+    motor2.run (BACKWARD);
+
+}
+ if (distance > 100 && distancw<200)
+ {   
+  Serial.print ( distance);
+  Serial.print ( " CM!");// print out the distance in centimeters.
+motor1.setSpeed(125); 
+  motor2.setSpeed (125);
+  Serial.println (" close 3");
+    motor1.run(FORWARD);
+    motor2.run (BACKWARD);
+
+}
+ if (distance >200)
+ {   
+  Serial.print ( distance);
+  Serial.print ( " CM!");// print out the distance in centimeters.
+motor1.setSpeed(55);
+  motor2.setSpeed (55);
+  Serial.println (" close 4");
+    motor1.run(FORWARD);
     motor2.run (BACKWARD);
 
 }
   else {
-   Serial.println ("No obstacle detected. going forward");
+   Serial.println ("No detections");
    delay (15);
-   motor1.run(FORWARD); //if there's no obstacle ahead, Go Forward! 
-   motor2.run(FORWARD);  
+   motor1.setSpeed(0); 
+   motor2.setSpeed(0);
   }  
+}
   
   
